@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h2 {
+            color: #007bff;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            text-align: center; 
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn {
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📋 Liste des domaines</h2>
+        
+        <a href="{% url 'scan_create' %}" class="btn btn-success mb-3">➕ Ajouter </a>
+        
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Domaine</th>
+                    <th>IP</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for scan in scans %}
+                <tr>
+                    <td>{{ scan.domain }}</td>
+                    <td>{{ scan.ip }}</td>
+                    <td>
+                        <a href="{% url 'scan_edit' scan.id %}" class="btn btn-primary btn-sm">✏️ Modifier</a>
+                        <a href="{% url 'scan_delete' scan.id %}" class="btn btn-danger btn-sm">🗑️ Supprimer</a>
+                        <a href="{% url 'scan_execute' scan.id %}" class="btn btn-warning btn-sm">🔍 Scan</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucun information enregistré.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'login' %}">Déconnexion</a>
+    </div>
+</body>
+</html>
